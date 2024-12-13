@@ -68,13 +68,35 @@
             font-size: 14px;
             margin-top: 30px;
         }
+
+        /* Login form styles */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .login-container input {
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>EVILN3T C2</h1>
     <p>Welcome To Stresser Panel, enjoy!</p>
 
-    <div class="container">
+    <!-- Login Form -->
+    <div id="loginForm" class="login-container">
+        <h2>Please Login</h2>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button class="button" onclick="login()">Login</button>
+        <p id="loginError" style="color: red;"></p>
+    </div>
+
+    <!-- Main Content (hidden initially) -->
+    <div id="mainContent" class="container" style="display: none;">
         <!-- Attack Options -->
         <div class="input-container">
             <select id="attackType">
@@ -106,6 +128,25 @@
     </div>
 
     <script>
+        const users = {
+            'ckd1': 'ckd',
+            'zenex': 'zenex1',
+            'evilnet': 'gift'
+        };
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if username and password are valid
+            if (users[username] && users[username] === password) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid username or password';
+            }
+        }
+
         // Start the attack based on selected option
         function startAttack() {
             const attackType = document.getElementById('attackType').value;
@@ -169,6 +210,5 @@
             }, 1000); // Sends packets every second
         }
     </script>
-    <center><img src="https://j.top4top.io/p_3268bu5gk1.png" width="550" height="350"><a href="https://t.me/evilnet0">Visit Us</a></center>
 </body>
 </html>
