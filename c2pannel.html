@@ -88,6 +88,21 @@
             max-height: 300px;
             overflow-y: auto;
             margin-top: 20px;
+            white-space: pre-wrap; /* Preserve newlines */
+            word-wrap: break-word; /* Allow long words to break */
+            display: block;
+        }
+
+        .log-entry {
+            margin-bottom: 10px; /* Adds space between logs */
+            padding: 5px;
+            border: 1px solid #444; /* Gives a border to the block */
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darkened background */
+        }
+
+        .log-entry span {
+            color: #ff6600; /* Highlight the type in orange */
         }
 
         /* Login Form */
@@ -257,7 +272,14 @@
         // Function to log output in terminal
         function log(type, message) {
             const logContainer = document.getElementById('logContainer');
-            logContainer.textContent += `\n[${type}] ${message}`;
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+
+            logEntry.innerHTML = `<span>[${type}]</span> ${message}`;
+            logContainer.appendChild(logEntry);
+
+            // Ensure the log container scrolls to the bottom
             logContainer.scrollTop = logContainer.scrollHeight;
         }
     </script>
