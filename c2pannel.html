@@ -206,6 +206,20 @@
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
                 log('Login Successful', `Welcome, ${username}!`);
+                
+                // Log EVILNET C2 text block with [INFO] and [HELP]
+                log('INFO', `
+                     EVILNET C2
+ .----------------.  .----------------.  .----------------. 
+| .--------------. || .--------------. || .--------------. |
+| |   ______     | || |  _________   | || |  ____  ____  | |
+|    |_____|    | || |   |______|   | |
+| |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------' 
+             To attack :`);
+
+                log('[NOTICE]', 'Type "help" To show all commends');
             } else {
                 alert('Invalid username or password.');
             }
